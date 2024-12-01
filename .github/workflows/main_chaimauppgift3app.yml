@@ -22,3 +22,14 @@ jobs:
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_7964E6EBDAA541B28A25BDD69F9C0100 }}
           package: .
+          
+      - name: Run Azure Function Smoke Test
+        run: |
+          echo "Running Azure Function smoke test..."
+          response=$(curl -o /dev/null -s -w "%{http_code}" "https://functionappchaima20241201151433.azurewebsites.net/api/Function1?code=${{ secrets.AZURE_FUNCTION_API_TOKEN }}")
+          if [ $response -eq 200 ]; then
+            echo "Smoke test passed! Azure Function returned status code 200."
+          else
+            echo "Smoke test failed! Azure Function returned status code: $response"
+            exit 1
+          fi
