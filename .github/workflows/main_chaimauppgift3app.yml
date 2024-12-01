@@ -26,7 +26,7 @@ jobs:
       - name: Run Azure Function Smoke Test
         run: |
           echo "Running Azure Function smoke test..."
-          response=$(curl -o /dev/null -s -w "%{http_code}" "https://functionappchaima20241201151433.azurewebsites.net/api/Function1?code=${{ secrets.AZURE_FUNCTION_API_TOKEN }}")
+          response=$(curl -o /dev/null -s -w "%{http_code}" "https://smoketest.azurewebsites.net/api/Function1?code=${{ secrets.AZURE_FUNCTION_API_TOKEN }}")
           if [ $response -eq 200 ]; then
             echo "Smoke test passed! Azure Function returned status code 200."
           else
